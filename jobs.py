@@ -4,5 +4,8 @@ from .management.commands.dumpdata_ftp import Command as DumpCommand
 
 @job
 def dumpdata_ftp():
-    dump =DumpCommand()
-    dump.handle()
+    try:
+        dump =DumpCommand()
+        dump.handle()
+    except:
+        pass
