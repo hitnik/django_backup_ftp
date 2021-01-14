@@ -54,8 +54,6 @@ class BackupConfig(AppConfig):
                     if count_dumpdata > 1:
                         job.delete()
 
-            for job in scheduler.get_jobs():
-                print(job.func_name)
 
         except ConnectionError:
             pass
