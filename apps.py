@@ -32,12 +32,14 @@ class BackupConfig(AppConfig):
             date_schedule_dumpdata = date_schedule_dumpdata  + datetime.timedelta(seconds=settings.DUMPDATA_INTERVAL)
 
 
+
+
         from . import jobs
 
         try:
             scheduler = django_rq.get_scheduler('default')
             for job in scheduler.get_jobs():
-                if job.func_name == 'forumTopics.jobs.dumpdata_ftp':
+                if job.func_name == 'backup_ftp.jobs.dumpdata_ftp':
                     job.delete()
 
             scheduler.schedule(scheduled_time=date_schedule_dumpdata,
@@ -47,7 +49,7 @@ class BackupConfig(AppConfig):
 
             count_dumpdata = 0
             for job in scheduler.get_jobs():
-                if job.func_name == 'forumTopics.jobs.dumpdata_ftp':
+                if job.func_name == 'backup_ftp.jobs.dumpdata_ftp':
                     count_dumpdata += 1
                     if count_dumpdata > 1:
                         job.delete()
